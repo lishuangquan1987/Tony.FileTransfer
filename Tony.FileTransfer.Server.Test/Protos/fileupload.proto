@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tony.FileTransfer.Server";
+
+import "Protos/common.proto";
+
+package fileupload;
+
+
+
+service IFileUpload{
+	//
+	rpc CheckFileExist (CheckFileExistRequest) returns (common.CommonResponse);
+
+	rpc UploadWithStream (stream UploadWithStreamRequest) returns (common.CommonResponse);
+
+}
+
+message CheckFileExistRequest{
+	string Md5=1;
+}
+
+message UploadWithStreamRequest{
+	string Md5=1;
+	int32 Index=2;
+	bytes Data=3;
+}
+
+
+

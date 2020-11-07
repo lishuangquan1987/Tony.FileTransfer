@@ -1,0 +1,1 @@
+obj\Debug\netcoreapp3.1/Common.cs: ../Tony.FileTransfer.Server/Protos/common.proto

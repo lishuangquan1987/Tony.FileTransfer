@@ -1,0 +1,9 @@
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\bin\Debug\netcoreapp3.1\Tony.FileTransfer.Core.deps.json
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\bin\Debug\netcoreapp3.1\Tony.FileTransfer.Core.dll
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\bin\Debug\netcoreapp3.1\Tony.FileTransfer.Core.pdb
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Core.AssemblyInfoInputs.cache
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Core.AssemblyInfo.cs
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Core.csproj.CoreCompileInputs.cache
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Core.dll
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Core.pdb
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Core\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Core.csprojAssemblyReference.cache

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tony.FileTransfer.Server";
+
+package common;
+
+message CommonResponse{
+	bool Result=1;
+	int32 ErrorCode=2;
+}
+

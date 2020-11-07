@@ -1,0 +1,3 @@
+obj\Debug\netcoreapp3.1\Protos/Fileupload.cs \
+obj\Debug\netcoreapp3.1\Protos/FileuploadGrpc.cs: Protos/common.proto\
+ Protos/fileupload.proto
