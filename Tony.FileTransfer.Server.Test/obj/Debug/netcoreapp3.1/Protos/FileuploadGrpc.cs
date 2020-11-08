@@ -45,6 +45,7 @@ namespace Tony.FileTransfer.Server {
     static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.CheckFileExistRequest> __Marshaller_fileupload_CheckFileExistRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.CheckFileExistRequest.Parser));
     static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.CommonResponse> __Marshaller_common_CommonResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.CommonResponse.Parser));
     static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.UploadWithStreamRequest> __Marshaller_fileupload_UploadWithStreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.UploadWithStreamRequest.Parser));
+    static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.FinishUploadRequest> __Marshaller_fileupload_FinishUploadRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.FinishUploadRequest.Parser));
 
     static readonly grpc::Method<global::Tony.FileTransfer.Server.CheckFileExistRequest, global::Tony.FileTransfer.Server.CommonResponse> __Method_CheckFileExist = new grpc::Method<global::Tony.FileTransfer.Server.CheckFileExistRequest, global::Tony.FileTransfer.Server.CommonResponse>(
         grpc::MethodType.Unary,
@@ -54,10 +55,17 @@ namespace Tony.FileTransfer.Server {
         __Marshaller_common_CommonResponse);
 
     static readonly grpc::Method<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse> __Method_UploadWithStream = new grpc::Method<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse>(
-        grpc::MethodType.ClientStreaming,
+        grpc::MethodType.DuplexStreaming,
         __ServiceName,
         "UploadWithStream",
         __Marshaller_fileupload_UploadWithStreamRequest,
+        __Marshaller_common_CommonResponse);
+
+    static readonly grpc::Method<global::Tony.FileTransfer.Server.FinishUploadRequest, global::Tony.FileTransfer.Server.CommonResponse> __Method_FinishUpload = new grpc::Method<global::Tony.FileTransfer.Server.FinishUploadRequest, global::Tony.FileTransfer.Server.CommonResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "FinishUpload",
+        __Marshaller_fileupload_FinishUploadRequest,
         __Marshaller_common_CommonResponse);
 
     /// <summary>Service descriptor</summary>
@@ -89,53 +97,45 @@ namespace Tony.FileTransfer.Server {
       {
       }
 
-      /// <summary>
-      /// </summary>
-      /// <param name="request">The request to send to the server.</param>
-      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
-      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
-      /// <param name="cancellationToken">An optional token for canceling the call.</param>
-      /// <returns>The response received from the server.</returns>
       public virtual global::Tony.FileTransfer.Server.CommonResponse CheckFileExist(global::Tony.FileTransfer.Server.CheckFileExistRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return CheckFileExist(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      /// <summary>
-      /// </summary>
-      /// <param name="request">The request to send to the server.</param>
-      /// <param name="options">The options for the call.</param>
-      /// <returns>The response received from the server.</returns>
       public virtual global::Tony.FileTransfer.Server.CommonResponse CheckFileExist(global::Tony.FileTransfer.Server.CheckFileExistRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_CheckFileExist, null, options, request);
       }
-      /// <summary>
-      /// </summary>
-      /// <param name="request">The request to send to the server.</param>
-      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
-      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
-      /// <param name="cancellationToken">An optional token for canceling the call.</param>
-      /// <returns>The call object.</returns>
       public virtual grpc::AsyncUnaryCall<global::Tony.FileTransfer.Server.CommonResponse> CheckFileExistAsync(global::Tony.FileTransfer.Server.CheckFileExistRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return CheckFileExistAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      /// <summary>
-      /// </summary>
-      /// <param name="request">The request to send to the server.</param>
-      /// <param name="options">The options for the call.</param>
-      /// <returns>The call object.</returns>
       public virtual grpc::AsyncUnaryCall<global::Tony.FileTransfer.Server.CommonResponse> CheckFileExistAsync(global::Tony.FileTransfer.Server.CheckFileExistRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_CheckFileExist, null, options, request);
       }
-      public virtual grpc::AsyncClientStreamingCall<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse> UploadWithStream(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncDuplexStreamingCall<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse> UploadWithStream(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return UploadWithStream(new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncClientStreamingCall<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse> UploadWithStream(grpc::CallOptions options)
+      public virtual grpc::AsyncDuplexStreamingCall<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse> UploadWithStream(grpc::CallOptions options)
       {
-        return CallInvoker.AsyncClientStreamingCall(__Method_UploadWithStream, null, options);
+        return CallInvoker.AsyncDuplexStreamingCall(__Method_UploadWithStream, null, options);
+      }
+      public virtual global::Tony.FileTransfer.Server.CommonResponse FinishUpload(global::Tony.FileTransfer.Server.FinishUploadRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return FinishUpload(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Tony.FileTransfer.Server.CommonResponse FinishUpload(global::Tony.FileTransfer.Server.FinishUploadRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_FinishUpload, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Tony.FileTransfer.Server.CommonResponse> FinishUploadAsync(global::Tony.FileTransfer.Server.FinishUploadRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return FinishUploadAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Tony.FileTransfer.Server.CommonResponse> FinishUploadAsync(global::Tony.FileTransfer.Server.FinishUploadRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_FinishUpload, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override IFileUploadClient NewInstance(ClientBaseConfiguration configuration)

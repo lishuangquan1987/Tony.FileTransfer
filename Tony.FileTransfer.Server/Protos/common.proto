@@ -6,6 +6,24 @@ package common;
 
 message CommonResponse{
 	bool Result=1;
-	int32 ErrorCode=2;
+	ErrorCodes ErrorCode=2;
+}
+enum ErrorCodes{
+	NoError=0;
+	DataBaseError=1;
+
+	FileAlreadyExistInServerCache=2;
+	FileAlreadyExistInServerDB=3;
+	FileNotExistInServerCache=4;
+	FileNotExistInServerDB=5;
+
+	BadCallContext=6;
+
+	RecognizeIdNotExist=7;
+	UserNotExist=8;
+	UserMachineNotBind=9;
+
+	MD5CompareError=10;
+	CacheFileNotExist=11;
 }
 

@@ -66,4 +66,4 @@ G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Server\bin\Debug\netcoreapp3.
 G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Server\bin\Debug\netcoreapp3.1\Tony.FileTransfer.Core.pdb
 G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Server\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Server.csproj.CoreCompileInputs.cache
 G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Server\obj\Debug\netcoreapp3.1\Tony.FileTransfer.Server.MvcApplicationPartsAssemblyInfo.cache
-G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Server\obj\Debug\netcoreapp3.1\scopedcss\bundle\Tony.FileTransfer.Server.styles.css
+G:\Project2020\Tony.FileTransfer\Tony.FileTransfer.Server\bin\Debug\netcoreapp3.1\Properties\launchSettings.json

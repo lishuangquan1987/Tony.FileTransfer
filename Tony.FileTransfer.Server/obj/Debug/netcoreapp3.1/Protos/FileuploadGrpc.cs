@@ -45,6 +45,7 @@ namespace Tony.FileTransfer.Server {
     static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.CheckFileExistRequest> __Marshaller_fileupload_CheckFileExistRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.CheckFileExistRequest.Parser));
     static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.CommonResponse> __Marshaller_common_CommonResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.CommonResponse.Parser));
     static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.UploadWithStreamRequest> __Marshaller_fileupload_UploadWithStreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.UploadWithStreamRequest.Parser));
+    static readonly grpc::Marshaller<global::Tony.FileTransfer.Server.FinishUploadRequest> __Marshaller_fileupload_FinishUploadRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Tony.FileTransfer.Server.FinishUploadRequest.Parser));
 
     static readonly grpc::Method<global::Tony.FileTransfer.Server.CheckFileExistRequest, global::Tony.FileTransfer.Server.CommonResponse> __Method_CheckFileExist = new grpc::Method<global::Tony.FileTransfer.Server.CheckFileExistRequest, global::Tony.FileTransfer.Server.CommonResponse>(
         grpc::MethodType.Unary,
@@ -54,10 +55,17 @@ namespace Tony.FileTransfer.Server {
         __Marshaller_common_CommonResponse);
 
     static readonly grpc::Method<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse> __Method_UploadWithStream = new grpc::Method<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse>(
-        grpc::MethodType.ClientStreaming,
+        grpc::MethodType.DuplexStreaming,
         __ServiceName,
         "UploadWithStream",
         __Marshaller_fileupload_UploadWithStreamRequest,
+        __Marshaller_common_CommonResponse);
+
+    static readonly grpc::Method<global::Tony.FileTransfer.Server.FinishUploadRequest, global::Tony.FileTransfer.Server.CommonResponse> __Method_FinishUpload = new grpc::Method<global::Tony.FileTransfer.Server.FinishUploadRequest, global::Tony.FileTransfer.Server.CommonResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "FinishUpload",
+        __Marshaller_fileupload_FinishUploadRequest,
         __Marshaller_common_CommonResponse);
 
     /// <summary>Service descriptor</summary>
@@ -70,17 +78,17 @@ namespace Tony.FileTransfer.Server {
     [grpc::BindServiceMethod(typeof(IFileUpload), "BindService")]
     public abstract partial class IFileUploadBase
     {
-      /// <summary>
-      /// </summary>
-      /// <param name="request">The request received from the client.</param>
-      /// <param name="context">The context of the server-side call handler being invoked.</param>
-      /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::Tony.FileTransfer.Server.CommonResponse> CheckFileExist(global::Tony.FileTransfer.Server.CheckFileExistRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::Tony.FileTransfer.Server.CommonResponse> UploadWithStream(grpc::IAsyncStreamReader<global::Tony.FileTransfer.Server.UploadWithStreamRequest> requestStream, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task UploadWithStream(grpc::IAsyncStreamReader<global::Tony.FileTransfer.Server.UploadWithStreamRequest> requestStream, grpc::IServerStreamWriter<global::Tony.FileTransfer.Server.CommonResponse> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Tony.FileTransfer.Server.CommonResponse> FinishUpload(global::Tony.FileTransfer.Server.FinishUploadRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -93,7 +101,8 @@ namespace Tony.FileTransfer.Server {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_CheckFileExist, serviceImpl.CheckFileExist)
-          .AddMethod(__Method_UploadWithStream, serviceImpl.UploadWithStream).Build();
+          .AddMethod(__Method_UploadWithStream, serviceImpl.UploadWithStream)
+          .AddMethod(__Method_FinishUpload, serviceImpl.FinishUpload).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -103,7 +112,8 @@ namespace Tony.FileTransfer.Server {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, IFileUploadBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_CheckFileExist, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Tony.FileTransfer.Server.CheckFileExistRequest, global::Tony.FileTransfer.Server.CommonResponse>(serviceImpl.CheckFileExist));
-      serviceBinder.AddMethod(__Method_UploadWithStream, serviceImpl == null ? null : new grpc::ClientStreamingServerMethod<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse>(serviceImpl.UploadWithStream));
+      serviceBinder.AddMethod(__Method_UploadWithStream, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::Tony.FileTransfer.Server.UploadWithStreamRequest, global::Tony.FileTransfer.Server.CommonResponse>(serviceImpl.UploadWithStream));
+      serviceBinder.AddMethod(__Method_FinishUpload, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Tony.FileTransfer.Server.FinishUploadRequest, global::Tony.FileTransfer.Server.CommonResponse>(serviceImpl.FinishUpload));
     }
 
   }

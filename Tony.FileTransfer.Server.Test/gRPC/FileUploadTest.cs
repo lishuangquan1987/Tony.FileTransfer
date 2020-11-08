@@ -20,7 +20,7 @@ namespace Tony.FileTransfer.Server.Test.gRPC
             var call = client.UploadWithStream();
             for (int i = 0; i < 100; i++)
             {
-               await call.RequestStream.WriteAsync(new UploadWithStreamRequest() { Index=i});
+               await call.RequestStream.WriteAsync(new UploadWithStreamRequest() {});
             }
             await call.RequestStream.CompleteAsync();
         }

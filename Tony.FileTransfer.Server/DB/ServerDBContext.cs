@@ -4,9 +4,16 @@ using Tony.FileTransfer.Core.TableModel;
 
 namespace Tony.FileTransfer.Server.DB
 {
-    public class ServerDBContext:DbContext
+    public class ServerDBContext : DbContext
     {
-        public ServerDBContext(DbContextOptions options):base(options)
+        public ServerDBContext()
+        {
+        }
+        /// <summary>
+        /// ctor for unit test
+        /// </summary>
+        /// <param name="options"></param>
+        public ServerDBContext(DbContextOptions options) : base(options)
         {
 
         }

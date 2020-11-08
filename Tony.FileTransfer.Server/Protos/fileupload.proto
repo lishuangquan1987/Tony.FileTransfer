@@ -9,11 +9,12 @@ package fileupload;
 
 
 service IFileUpload{
-	//
+	
 	rpc CheckFileExist (CheckFileExistRequest) returns (common.CommonResponse);
 
-	rpc UploadWithStream (stream UploadWithStreamRequest) returns (common.CommonResponse);
+	rpc UploadWithStream (stream UploadWithStreamRequest) returns (stream common.CommonResponse);
 
+	rpc FinishUpload(FinishUploadRequest) returns (common.CommonResponse);
 }
 
 message CheckFileExistRequest{
@@ -21,9 +22,15 @@ message CheckFileExistRequest{
 }
 
 message UploadWithStreamRequest{
+	bytes Data=2;
+}
+message FinishUploadRequest{
 	string Md5=1;
-	int32 Index=2;
-	bytes Data=3;
+	bool IsFastUpload=2;
+	string ClientFileName=3;
+	int32 RecognizeId=4;
+	string UserName=5;
+	 
 }
 
 

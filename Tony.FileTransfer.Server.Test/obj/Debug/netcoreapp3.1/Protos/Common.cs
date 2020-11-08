@@ -24,18 +24,43 @@ namespace Tony.FileTransfer.Server {
     static CommonReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNQcm90b3MvY29tbW9uLnByb3RvEgZjb21tb24iMwoOQ29tbW9uUmVzcG9u",
-            "c2USDgoGUmVzdWx0GAEgASgIEhEKCUVycm9yQ29kZRgCIAEoBUIbqgIYVG9u",
-            "eS5GaWxlVHJhbnNmZXIuU2VydmVyYgZwcm90bzM="));
+            "ChNQcm90b3MvY29tbW9uLnByb3RvEgZjb21tb24iRwoOQ29tbW9uUmVzcG9u",
+            "c2USDgoGUmVzdWx0GAEgASgIEiUKCUVycm9yQ29kZRgCIAEoDjISLmNvbW1v",
+            "bi5FcnJvckNvZGVzKq0CCgpFcnJvckNvZGVzEgsKB05vRXJyb3IQABIRCg1E",
+            "YXRhQmFzZUVycm9yEAESIQodRmlsZUFscmVhZHlFeGlzdEluU2VydmVyQ2Fj",
+            "aGUQAhIeChpGaWxlQWxyZWFkeUV4aXN0SW5TZXJ2ZXJEQhADEh0KGUZpbGVO",
+            "b3RFeGlzdEluU2VydmVyQ2FjaGUQBBIaChZGaWxlTm90RXhpc3RJblNlcnZl",
+            "ckRCEAUSEgoOQmFkQ2FsbENvbnRleHQQBhIXChNSZWNvZ25pemVJZE5vdEV4",
+            "aXN0EAcSEAoMVXNlck5vdEV4aXN0EAgSFgoSVXNlck1hY2hpbmVOb3RCaW5k",
+            "EAkSEwoPTUQ1Q29tcGFyZUVycm9yEAoSFQoRQ2FjaGVGaWxlTm90RXhpc3QQ",
+            "C0IbqgIYVG9ueS5GaWxlVHJhbnNmZXIuU2VydmVyYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Tony.FileTransfer.Server.ErrorCodes), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tony.FileTransfer.Server.CommonResponse), global::Tony.FileTransfer.Server.CommonResponse.Parser, new[]{ "Result", "ErrorCode" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  public enum ErrorCodes {
+    [pbr::OriginalName("NoError")] NoError = 0,
+    [pbr::OriginalName("DataBaseError")] DataBaseError = 1,
+    [pbr::OriginalName("FileAlreadyExistInServerCache")] FileAlreadyExistInServerCache = 2,
+    [pbr::OriginalName("FileAlreadyExistInServerDB")] FileAlreadyExistInServerDb = 3,
+    [pbr::OriginalName("FileNotExistInServerCache")] FileNotExistInServerCache = 4,
+    [pbr::OriginalName("FileNotExistInServerDB")] FileNotExistInServerDb = 5,
+    [pbr::OriginalName("BadCallContext")] BadCallContext = 6,
+    [pbr::OriginalName("RecognizeIdNotExist")] RecognizeIdNotExist = 7,
+    [pbr::OriginalName("UserNotExist")] UserNotExist = 8,
+    [pbr::OriginalName("UserMachineNotBind")] UserMachineNotBind = 9,
+    [pbr::OriginalName("MD5CompareError")] Md5CompareError = 10,
+    [pbr::OriginalName("CacheFileNotExist")] CacheFileNotExist = 11,
+  }
+
+  #endregion
+
   #region Messages
   public sealed partial class CommonResponse : pb::IMessage<CommonResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -89,9 +114,9 @@ namespace Tony.FileTransfer.Server {
 
     /// <summary>Field number for the "ErrorCode" field.</summary>
     public const int ErrorCodeFieldNumber = 2;
-    private int errorCode_;
+    private global::Tony.FileTransfer.Server.ErrorCodes errorCode_ = global::Tony.FileTransfer.Server.ErrorCodes.NoError;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int ErrorCode {
+    public global::Tony.FileTransfer.Server.ErrorCodes ErrorCode {
       get { return errorCode_; }
       set {
         errorCode_ = value;
@@ -120,7 +145,7 @@ namespace Tony.FileTransfer.Server {
     public override int GetHashCode() {
       int hash = 1;
       if (Result != false) hash ^= Result.GetHashCode();
-      if (ErrorCode != 0) hash ^= ErrorCode.GetHashCode();
+      if (ErrorCode != global::Tony.FileTransfer.Server.ErrorCodes.NoError) hash ^= ErrorCode.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -141,9 +166,9 @@ namespace Tony.FileTransfer.Server {
         output.WriteRawTag(8);
         output.WriteBool(Result);
       }
-      if (ErrorCode != 0) {
+      if (ErrorCode != global::Tony.FileTransfer.Server.ErrorCodes.NoError) {
         output.WriteRawTag(16);
-        output.WriteInt32(ErrorCode);
+        output.WriteEnum((int) ErrorCode);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -158,9 +183,9 @@ namespace Tony.FileTransfer.Server {
         output.WriteRawTag(8);
         output.WriteBool(Result);
       }
-      if (ErrorCode != 0) {
+      if (ErrorCode != global::Tony.FileTransfer.Server.ErrorCodes.NoError) {
         output.WriteRawTag(16);
-        output.WriteInt32(ErrorCode);
+        output.WriteEnum((int) ErrorCode);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -174,8 +199,8 @@ namespace Tony.FileTransfer.Server {
       if (Result != false) {
         size += 1 + 1;
       }
-      if (ErrorCode != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ErrorCode);
+      if (ErrorCode != global::Tony.FileTransfer.Server.ErrorCodes.NoError) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ErrorCode);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -191,7 +216,7 @@ namespace Tony.FileTransfer.Server {
       if (other.Result != false) {
         Result = other.Result;
       }
-      if (other.ErrorCode != 0) {
+      if (other.ErrorCode != global::Tony.FileTransfer.Server.ErrorCodes.NoError) {
         ErrorCode = other.ErrorCode;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -213,7 +238,7 @@ namespace Tony.FileTransfer.Server {
             break;
           }
           case 16: {
-            ErrorCode = input.ReadInt32();
+            ErrorCode = (global::Tony.FileTransfer.Server.ErrorCodes) input.ReadEnum();
             break;
           }
         }
@@ -235,7 +260,7 @@ namespace Tony.FileTransfer.Server {
             break;
           }
           case 16: {
-            ErrorCode = input.ReadInt32();
+            ErrorCode = (global::Tony.FileTransfer.Server.ErrorCodes) input.ReadEnum();
             break;
           }
         }

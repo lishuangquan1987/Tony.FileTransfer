@@ -26,18 +26,23 @@ namespace Tony.FileTransfer.Server {
           string.Concat(
             "ChdQcm90b3MvZmlsZXVwbG9hZC5wcm90bxIKZmlsZXVwbG9hZBoTUHJvdG9z",
             "L2NvbW1vbi5wcm90byIkChVDaGVja0ZpbGVFeGlzdFJlcXVlc3QSCwoDTWQ1",
-            "GAEgASgJIkMKF1VwbG9hZFdpdGhTdHJlYW1SZXF1ZXN0EgsKA01kNRgBIAEo",
-            "CRINCgVJbmRleBgCIAEoBRIMCgREYXRhGAMgASgMMq0BCgtJRmlsZVVwbG9h",
-            "ZBJLCg5DaGVja0ZpbGVFeGlzdBIhLmZpbGV1cGxvYWQuQ2hlY2tGaWxlRXhp",
-            "c3RSZXF1ZXN0GhYuY29tbW9uLkNvbW1vblJlc3BvbnNlElEKEFVwbG9hZFdp",
-            "dGhTdHJlYW0SIy5maWxldXBsb2FkLlVwbG9hZFdpdGhTdHJlYW1SZXF1ZXN0",
-            "GhYuY29tbW9uLkNvbW1vblJlc3BvbnNlKAFCG6oCGFRvbnkuRmlsZVRyYW5z",
-            "ZmVyLlNlcnZlcmIGcHJvdG8z"));
+            "GAEgASgJIicKF1VwbG9hZFdpdGhTdHJlYW1SZXF1ZXN0EgwKBERhdGEYAiAB",
+            "KAwidwoTRmluaXNoVXBsb2FkUmVxdWVzdBILCgNNZDUYASABKAkSFAoMSXNG",
+            "YXN0VXBsb2FkGAIgASgIEhYKDkNsaWVudEZpbGVOYW1lGAMgASgJEhMKC1Jl",
+            "Y29nbml6ZUlkGAQgASgFEhAKCFVzZXJOYW1lGAUgASgJMvgBCgtJRmlsZVVw",
+            "bG9hZBJLCg5DaGVja0ZpbGVFeGlzdBIhLmZpbGV1cGxvYWQuQ2hlY2tGaWxl",
+            "RXhpc3RSZXF1ZXN0GhYuY29tbW9uLkNvbW1vblJlc3BvbnNlElMKEFVwbG9h",
+            "ZFdpdGhTdHJlYW0SIy5maWxldXBsb2FkLlVwbG9hZFdpdGhTdHJlYW1SZXF1",
+            "ZXN0GhYuY29tbW9uLkNvbW1vblJlc3BvbnNlKAEwARJHCgxGaW5pc2hVcGxv",
+            "YWQSHy5maWxldXBsb2FkLkZpbmlzaFVwbG9hZFJlcXVlc3QaFi5jb21tb24u",
+            "Q29tbW9uUmVzcG9uc2VCG6oCGFRvbnkuRmlsZVRyYW5zZmVyLlNlcnZlcmIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Tony.FileTransfer.Server.CommonReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tony.FileTransfer.Server.CheckFileExistRequest), global::Tony.FileTransfer.Server.CheckFileExistRequest.Parser, new[]{ "Md5" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tony.FileTransfer.Server.UploadWithStreamRequest), global::Tony.FileTransfer.Server.UploadWithStreamRequest.Parser, new[]{ "Md5", "Index", "Data" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tony.FileTransfer.Server.UploadWithStreamRequest), global::Tony.FileTransfer.Server.UploadWithStreamRequest.Parser, new[]{ "Data" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tony.FileTransfer.Server.FinishUploadRequest), global::Tony.FileTransfer.Server.FinishUploadRequest.Parser, new[]{ "Md5", "IsFastUpload", "ClientFileName", "RecognizeId", "UserName" }, null, null, null, null)
           }));
     }
     #endregion
@@ -245,8 +250,6 @@ namespace Tony.FileTransfer.Server {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public UploadWithStreamRequest(UploadWithStreamRequest other) : this() {
-      md5_ = other.md5_;
-      index_ = other.index_;
       data_ = other.data_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -256,30 +259,8 @@ namespace Tony.FileTransfer.Server {
       return new UploadWithStreamRequest(this);
     }
 
-    /// <summary>Field number for the "Md5" field.</summary>
-    public const int Md5FieldNumber = 1;
-    private string md5_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Md5 {
-      get { return md5_; }
-      set {
-        md5_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "Index" field.</summary>
-    public const int IndexFieldNumber = 2;
-    private int index_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Index {
-      get { return index_; }
-      set {
-        index_ = value;
-      }
-    }
-
     /// <summary>Field number for the "Data" field.</summary>
-    public const int DataFieldNumber = 3;
+    public const int DataFieldNumber = 2;
     private pb::ByteString data_ = pb::ByteString.Empty;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pb::ByteString Data {
@@ -302,8 +283,6 @@ namespace Tony.FileTransfer.Server {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Md5 != other.Md5) return false;
-      if (Index != other.Index) return false;
       if (Data != other.Data) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -311,9 +290,235 @@ namespace Tony.FileTransfer.Server {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Md5.Length != 0) hash ^= Md5.GetHashCode();
-      if (Index != 0) hash ^= Index.GetHashCode();
       if (Data.Length != 0) hash ^= Data.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Data.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteBytes(Data);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Data.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteBytes(Data);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Data.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Data);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(UploadWithStreamRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Data.Length != 0) {
+        Data = other.Data;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 18: {
+            Data = input.ReadBytes();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 18: {
+            Data = input.ReadBytes();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class FinishUploadRequest : pb::IMessage<FinishUploadRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<FinishUploadRequest> _parser = new pb::MessageParser<FinishUploadRequest>(() => new FinishUploadRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<FinishUploadRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Tony.FileTransfer.Server.FileuploadReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public FinishUploadRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public FinishUploadRequest(FinishUploadRequest other) : this() {
+      md5_ = other.md5_;
+      isFastUpload_ = other.isFastUpload_;
+      clientFileName_ = other.clientFileName_;
+      recognizeId_ = other.recognizeId_;
+      userName_ = other.userName_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public FinishUploadRequest Clone() {
+      return new FinishUploadRequest(this);
+    }
+
+    /// <summary>Field number for the "Md5" field.</summary>
+    public const int Md5FieldNumber = 1;
+    private string md5_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Md5 {
+      get { return md5_; }
+      set {
+        md5_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "IsFastUpload" field.</summary>
+    public const int IsFastUploadFieldNumber = 2;
+    private bool isFastUpload_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool IsFastUpload {
+      get { return isFastUpload_; }
+      set {
+        isFastUpload_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ClientFileName" field.</summary>
+    public const int ClientFileNameFieldNumber = 3;
+    private string clientFileName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ClientFileName {
+      get { return clientFileName_; }
+      set {
+        clientFileName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "RecognizeId" field.</summary>
+    public const int RecognizeIdFieldNumber = 4;
+    private int recognizeId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int RecognizeId {
+      get { return recognizeId_; }
+      set {
+        recognizeId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "UserName" field.</summary>
+    public const int UserNameFieldNumber = 5;
+    private string userName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string UserName {
+      get { return userName_; }
+      set {
+        userName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as FinishUploadRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(FinishUploadRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Md5 != other.Md5) return false;
+      if (IsFastUpload != other.IsFastUpload) return false;
+      if (ClientFileName != other.ClientFileName) return false;
+      if (RecognizeId != other.RecognizeId) return false;
+      if (UserName != other.UserName) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Md5.Length != 0) hash ^= Md5.GetHashCode();
+      if (IsFastUpload != false) hash ^= IsFastUpload.GetHashCode();
+      if (ClientFileName.Length != 0) hash ^= ClientFileName.GetHashCode();
+      if (RecognizeId != 0) hash ^= RecognizeId.GetHashCode();
+      if (UserName.Length != 0) hash ^= UserName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -334,13 +539,21 @@ namespace Tony.FileTransfer.Server {
         output.WriteRawTag(10);
         output.WriteString(Md5);
       }
-      if (Index != 0) {
+      if (IsFastUpload != false) {
         output.WriteRawTag(16);
-        output.WriteInt32(Index);
+        output.WriteBool(IsFastUpload);
       }
-      if (Data.Length != 0) {
+      if (ClientFileName.Length != 0) {
         output.WriteRawTag(26);
-        output.WriteBytes(Data);
+        output.WriteString(ClientFileName);
+      }
+      if (RecognizeId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(RecognizeId);
+      }
+      if (UserName.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(UserName);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -355,13 +568,21 @@ namespace Tony.FileTransfer.Server {
         output.WriteRawTag(10);
         output.WriteString(Md5);
       }
-      if (Index != 0) {
+      if (IsFastUpload != false) {
         output.WriteRawTag(16);
-        output.WriteInt32(Index);
+        output.WriteBool(IsFastUpload);
       }
-      if (Data.Length != 0) {
+      if (ClientFileName.Length != 0) {
         output.WriteRawTag(26);
-        output.WriteBytes(Data);
+        output.WriteString(ClientFileName);
+      }
+      if (RecognizeId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(RecognizeId);
+      }
+      if (UserName.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(UserName);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -375,11 +596,17 @@ namespace Tony.FileTransfer.Server {
       if (Md5.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Md5);
       }
-      if (Index != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
+      if (IsFastUpload != false) {
+        size += 1 + 1;
       }
-      if (Data.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Data);
+      if (ClientFileName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ClientFileName);
+      }
+      if (RecognizeId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(RecognizeId);
+      }
+      if (UserName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserName);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -388,18 +615,24 @@ namespace Tony.FileTransfer.Server {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(UploadWithStreamRequest other) {
+    public void MergeFrom(FinishUploadRequest other) {
       if (other == null) {
         return;
       }
       if (other.Md5.Length != 0) {
         Md5 = other.Md5;
       }
-      if (other.Index != 0) {
-        Index = other.Index;
+      if (other.IsFastUpload != false) {
+        IsFastUpload = other.IsFastUpload;
       }
-      if (other.Data.Length != 0) {
-        Data = other.Data;
+      if (other.ClientFileName.Length != 0) {
+        ClientFileName = other.ClientFileName;
+      }
+      if (other.RecognizeId != 0) {
+        RecognizeId = other.RecognizeId;
+      }
+      if (other.UserName.Length != 0) {
+        UserName = other.UserName;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -420,11 +653,19 @@ namespace Tony.FileTransfer.Server {
             break;
           }
           case 16: {
-            Index = input.ReadInt32();
+            IsFastUpload = input.ReadBool();
             break;
           }
           case 26: {
-            Data = input.ReadBytes();
+            ClientFileName = input.ReadString();
+            break;
+          }
+          case 32: {
+            RecognizeId = input.ReadInt32();
+            break;
+          }
+          case 42: {
+            UserName = input.ReadString();
             break;
           }
         }
@@ -446,11 +687,19 @@ namespace Tony.FileTransfer.Server {
             break;
           }
           case 16: {
-            Index = input.ReadInt32();
+            IsFastUpload = input.ReadBool();
             break;
           }
           case 26: {
-            Data = input.ReadBytes();
+            ClientFileName = input.ReadString();
+            break;
+          }
+          case 32: {
+            RecognizeId = input.ReadInt32();
+            break;
+          }
+          case 42: {
+            UserName = input.ReadString();
             break;
           }
         }
