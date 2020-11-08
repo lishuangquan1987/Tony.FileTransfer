@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using Tony.FileTransfer.Core.TableModel;
 
 namespace Tony.FileTransfer.Server.DB
@@ -24,5 +27,10 @@ namespace Tony.FileTransfer.Server.DB
         public DbSet<User_MachineInfo> UserMachineInfos { get; set; }
         public DbSet<Machine_FileInfo> MachineFileInfos { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite($"Data Source=TonyFileTranster.db");
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

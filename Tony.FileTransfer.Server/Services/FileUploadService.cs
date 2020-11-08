@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -17,8 +18,9 @@ namespace Tony.FileTransfer.Server.Services
 {
     public class FileUploadService : IFileUpload.IFileUploadBase
     {
-        private ILogger logger;
-        public FileUploadService(ILogger logger)
+        private ILogger<FileUploadService> logger;
+        
+        public FileUploadService(ILogger<FileUploadService> logger)
         {
             this.logger = logger;
         }
@@ -26,6 +28,7 @@ namespace Tony.FileTransfer.Server.Services
         public override Task<CommonResponse> CheckFileExist(CheckFileExistRequest request, ServerCallContext context)
         {
             logger.LogInformation($"start CheckFileExist md5[{request.Md5}]");
+            
             bool result = false;
             try
             {
@@ -79,6 +82,7 @@ namespace Tony.FileTransfer.Server.Services
 
             try
             {
+                Stopwatch stopwatch = Stopwatch.StartNew();
                 using (var fileStream = new FileStream(cacheFilePath, FileMode.Create, FileAccess.Write))
                 {
                     //save file 
@@ -92,6 +96,7 @@ namespace Tony.FileTransfer.Server.Services
                         await responseStream.WriteAsync(new CommonResponse() { Result = true });
                     }
                 }
+                Console.WriteLine($"传输完成，耗时：{stopwatch.ElapsedMilliseconds}");
 
             }
             catch (Exception e)
@@ -149,11 +154,12 @@ namespace Tony.FileTransfer.Server.Services
                 return new CommonResponse() { Result = false, ErrorCode = errorCode };
             }
 
-            //change cache file name
+            
             if (UploadStateManager.Instance.UploadStateCache.ContainsKey(request.Md5))
             {
                 return new CommonResponse() { Result = false, ErrorCode = ErrorCodes.FileNotExistInServerCache };   
             }
+            //change cache file name
             var state = UploadStateManager.Instance.UploadStateCache[request.Md5];
             string cachePath = state.CacheFilePath;
             if (!File.Exists(cachePath))
@@ -190,7 +196,13 @@ namespace Tony.FileTransfer.Server.Services
                     //update File 
                     AddOrUpdateUserFile(userInfo.Id, fileInfo.Id, request.ClientFileName);
                 }
-                return new CommonResponse() { Result = AddOrUpdateMachineFile(machineInfo.Id, fileInfo.Id, request.ClientFileName) };
+                //remove the cache
+                bool result = AddOrUpdateMachineFile(machineInfo.Id, fileInfo.Id, request.ClientFileName);
+                if (result)
+                {
+                    UploadStateManager.Instance.UploadStateCache.Remove(request.Md5);
+                }
+                return new CommonResponse() { Result = result };
             }
         }
 

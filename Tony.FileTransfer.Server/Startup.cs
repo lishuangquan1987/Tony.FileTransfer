@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Tony.FileTransfer.Server.DB;
 using Tony.FileTransfer.Server.Services;
 
@@ -21,8 +23,15 @@ namespace Tony.FileTransfer.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
-            string sqliteFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TonyFileTranster");
-            services.AddDbContext<ServerDBContext>(options => options.UseSqlite(sqliteFile));
+            string sqliteFile = "TonyFileTranster.db";
+            services.AddDbContext<ServerDBContext>(options => options.UseSqlite($"Data Source={sqliteFile}"));
+
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            services.AddLogging(loggerBuilder=>
+            {
+                loggerBuilder.AddConfiguration(config.GetSection("Logging"));
+                loggerBuilder.AddConsole();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
