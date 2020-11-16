@@ -22,9 +22,21 @@ namespace Tony.FileTransfer.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc();
-            string sqliteFile = "TonyFileTranster.db";
-            services.AddDbContext<ServerDBContext>(options => options.UseSqlite($"Data Source={sqliteFile}"));
+            services.AddGrpc(options=>
+            {
+                options.MaxReceiveMessageSize = int.MaxValue;
+                options.MaxSendMessageSize = int.MaxValue;
+            });
+           
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TonyFileTranster.db");
+            //services.AddDbContext<ServerDBContext>(options => options.UseSqlite($"Data Source={fileName}"));
+            services.AddSingleton<Func<ServerDBContext>>(() =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<ServerDBContext>();
+                optionsBuilder.UseSqlite($"Data Source={fileName}");
+                //如果有其他依赖的话，可以通过provider.GetService<XX>()来获取
+                return new ServerDBContext(optionsBuilder.Options);
+            });
 
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             services.AddLogging(loggerBuilder=>

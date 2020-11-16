@@ -33,7 +33,7 @@
       "dependencies": {
         "Grpc.AspNetCore": {
           "target": "Package",
-          "version": "[2.27.0, )"
+          "version": "[2.33.1, )"
         },
         "Microsoft.EntityFrameworkCore.Sqlite": {
           "target": "Package",

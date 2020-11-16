@@ -1,0 +1,7 @@
+.vs/
+Tony.FileTransfer.Server/bin/Debug/netcoreapp3.1/Files/
+*.dll
+Tony.FileTransfer.Server/TonyFileTranster.db
+Tony.FileTransfer.Server.Test/bin/Debug/netcoreapp3.1/TonyFileTranster.db-shm
+Tony.FileTransfer.Server.Test/bin/Debug/netcoreapp3.1/TonyFileTranster.db-wal
+Tony.FileTransfer.Server.Test/obj/Debug/netcoreapp3.1/2ca81359-b29f-4441-80ab-df6aa684c144_Tony.FileTransfer.Server.Test.pdb

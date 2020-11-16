@@ -15,7 +15,7 @@ namespace Tony.FileTransfer.Server.Test.gRPC
         IFileUpload.IFileUploadClient client;
         public FileUploadTest()
         {
-            var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            var channel = GrpcChannel.ForAddress("https://localhost:5001",new GrpcChannelOptions() { MaxSendMessageSize=int.MaxValue, MaxReceiveMessageSize=int.MaxValue});
             client = new IFileUpload.IFileUploadClient(channel);
         }
         [Fact]
@@ -29,18 +29,36 @@ namespace Tony.FileTransfer.Server.Test.gRPC
             await call.RequestStream.CompleteAsync();
         }
         [Fact]
-        public async void UploadFileTest()
+        public  void UploadFileTest()
         {
-            string fileName = @"E:\DownLoad\elasticsearch-7.3.2-windows-x86_64.zip";
+            UploadFile(@"E:\DownLoad\dbeaver-ce-7.2.4-x86_64-setup.exe");
+        }
+        [Fact]
+        public void UploadFileTest2()
+        {
+            UploadFile(@"E:\DownLoad\【许仔诚品】PotPlayerSetup64_108.zip");
+        }
+        private async void UploadFile(string fileName)
+        {
             var md5 = Helper.GetMD5HashFromFile(fileName);
-            if (!client.CheckFileExist(new CheckFileExistRequest() { Md5 = md5 }).Result)
+            var checkFileResult = client.CheckFileExist(new CheckFileExistRequest() { Md5 = md5 });
+            if (!checkFileResult.Result)
             {
+                if (checkFileResult.ErrorCode != ErrorCodes.NoError)
+                {
+                    Console.WriteLine($"check file:{fileName} error,error code:{checkFileResult.ErrorCode}");
+                    return;
+                }
                 CancellationTokenSource tokenSource = new CancellationTokenSource() { };
-                var call = client.UploadWithStream(cancellationToken:tokenSource.Token);
-                int size = 1024;
+                var header = new Grpc.Core.Metadata();
+                header.Add(ConstStr.MD5_KEY, md5);
+                var call = client.UploadWithStream(cancellationToken: tokenSource.Token, headers: header);
+                var result = await call.ResponseStream.MoveNext(tokenSource.Token);
+
+                int size = 102400;
                 long totalLenth = new FileInfo(fileName).Length;
                 long hasUploadedLenth = 0;
-                
+
                 using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                 {
                     while (hasUploadedLenth < totalLenth)
@@ -49,7 +67,10 @@ namespace Tony.FileTransfer.Server.Test.gRPC
                         var count = fs.Read(bytes, 0, size);
                         if (count > 0)
                         {
-                            await call.RequestStream.WriteAsync(new UploadWithStreamRequest() { Data = Google.Protobuf.ByteString.CopyFrom(bytes) });
+                            var bytesToSend = new byte[count];
+                            Array.Copy(bytes, 0, bytesToSend, 0, count);
+
+                            await call.RequestStream.WriteAsync(new UploadWithStreamRequest() { Data = Google.Protobuf.ByteString.CopyFrom(bytesToSend) });
 
                             if (await call.ResponseStream.MoveNext(tokenSource.Token))
                             {

@@ -34,6 +34,10 @@
   "frameworks": {
     "netcoreapp3.1": {
       "dependencies": {
+        "Grpc.AspNetCore": {
+          "target": "Package",
+          "version": "[2.33.1, )"
+        },
         "Microsoft.NET.Test.Sdk": {
           "target": "Package",
           "version": "[16.5.0, )"

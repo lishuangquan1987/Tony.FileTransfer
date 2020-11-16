@@ -9,9 +9,6 @@ namespace Tony.FileTransfer.Server.DB
 {
     public class ServerDBContext : DbContext
     {
-        public ServerDBContext()
-        {
-        }
         /// <summary>
         /// ctor for unit test
         /// </summary>
@@ -27,10 +24,5 @@ namespace Tony.FileTransfer.Server.DB
         public DbSet<User_MachineInfo> UserMachineInfos { get; set; }
         public DbSet<Machine_FileInfo> MachineFileInfos { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite($"Data Source=TonyFileTranster.db");
-            base.OnConfiguring(optionsBuilder);
-        }
     }
 }
