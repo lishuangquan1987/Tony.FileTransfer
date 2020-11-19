@@ -8,6 +8,10 @@ message CommonResponse{
 	bool Result=1;
 	ErrorCodes ErrorCode=2;
 }
+message CommonResponseWithMessage {
+	CommonResponse Result=1;
+	string Message=2;
+}
 enum ErrorCodes{
 	NoError=0;
 	DataBaseError=1;
@@ -25,5 +29,15 @@ enum ErrorCodes{
 
 	MD5CompareError=10;
 	CacheFileNotExist=11;
+
+	InValidRecognizeId=12;
+	InValidMachineIdentity=13;
+
+	InValidUserId=14;
+
+	InValidUserNameOrPassword=15;
+}
+message CommonRequest{
+	string message=1;
 }
 

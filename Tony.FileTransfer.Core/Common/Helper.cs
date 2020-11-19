@@ -7,6 +7,7 @@ namespace Tony.FileTransfer.Core.Common
 {
     public class Helper
     {
+        private static DateTime baseDateTime = new DateTime(1970, 1, 1, 8, 0, 0);
         public static string GetMD5HashFromFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -32,6 +33,15 @@ namespace Tony.FileTransfer.Core.Common
             {
                 throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
             }
+        }
+
+        public static long ConvertTimeToLong(DateTime dt)
+        {
+            return (dt - baseDateTime).Ticks;
+        }
+        public static DateTime ConvertLongToTime(long tick)
+        {
+            return baseDateTime + new TimeSpan(tick);
         }
     }
 }

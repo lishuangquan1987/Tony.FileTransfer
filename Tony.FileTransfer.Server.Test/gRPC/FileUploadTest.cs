@@ -51,7 +51,7 @@ namespace Tony.FileTransfer.Server.Test.gRPC
                 }
                 CancellationTokenSource tokenSource = new CancellationTokenSource() { };
                 var header = new Grpc.Core.Metadata();
-                header.Add(ConstStr.MD5_KEY, md5);
+                header.Add(Const.MD5_KEY, md5);
                 var call = client.UploadWithStream(cancellationToken: tokenSource.Token, headers: header);
                 var result = await call.ResponseStream.MoveNext(tokenSource.Token);
 

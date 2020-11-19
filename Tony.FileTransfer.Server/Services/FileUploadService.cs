@@ -18,6 +18,9 @@ using Tony.FileTransfer.Server.State;
 
 namespace Tony.FileTransfer.Server.Services
 {
+    /// <summary>
+    /// TODO: file resume transfer
+    /// </summary>
     public class FileUploadService : IFileUpload.IFileUploadBase
     {
         private ILogger<FileUploadService> logger;
@@ -54,14 +57,14 @@ namespace Tony.FileTransfer.Server.Services
         public override async Task UploadWithStream(IAsyncStreamReader<UploadWithStreamRequest> requestStream, IServerStreamWriter<CommonResponse> responseStream, ServerCallContext context)
         {
             //check call context
-            if (!context.RequestHeaders.Any(x => x.Key == ConstStr.MD5_KEY))
+            if (!context.RequestHeaders.Any(x => x.Key == Const.MD5_KEY))
             {
                 await responseStream.WriteAsync(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.BadCallContext });
                 return;
             }
 
             //check the file's md5 in cache
-            string md5 = context.RequestHeaders.Get(ConstStr.MD5_KEY).Value;
+            string md5 = context.RequestHeaders.Get(Const.MD5_KEY).Value;
             if (UploadStateManager.Instance.UploadStateCache.ContainsKey(md5))
             {
                 await responseStream.WriteAsync(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.FileAlreadyExistInServerCache });
@@ -186,6 +189,7 @@ namespace Tony.FileTransfer.Server.Services
                     CreateTime = DateTime.Now,
                     Md5 = request.Md5,
                     ServerPath = newFilePath,
+                    Size=new FileInfo(newFilePath).Length
                 };
                 fileInfo = dbContext.Add(fileInfo).Entity;
 

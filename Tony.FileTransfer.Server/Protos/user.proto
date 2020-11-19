@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tony.FileTransfer.Server";
+
+import "Protos/common.proto";
+
+package user;
+
+service IUserService{
+	// use machine identity to get recognized id
+	rpc GetRecognizedId(common.CommonRequest) returns (common.CommonResponseWithMessage);
+	// use recognized id to get files
+	rpc GetFilesByRecognizedId(common.CommonRequest) returns(ClientFileInfosResponse);
+	// user Login
+	rpc Login(common.CommonRequest) returns (common.CommonResponseWithMessage);
+	// use userid to get files
+	rpc GetFilesByUserId(common.CommonRequest) returns(ClientFileInfosResponse);
+	// merge RecognizedId to UserId
+	rpc MergeMachineFileToUserFile(MergeMachineFileToUserFileRequest) returns (common.CommonResponse);
+	
+}
+message ClientFileInfo{
+	int32 FileId=1;
+	string FileName=2;
+	int64 FileSize=3;
+	int64 CreatedDate=4;
+}
+message ClientFileInfosResponse{
+	common.CommonResponse Result=1;
+	repeated ClientFileInfo ClientFileInfos=2;
+}
+message MergeMachineFileToUserFileRequest{
+	int32 RecognizedId=1;
+	int32 UserId=2;
+}
+

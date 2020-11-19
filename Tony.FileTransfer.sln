@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tony.FileTransfer.Server", "Tony.FileTransfer.Server\Tony.FileTransfer.Server.csproj", "{7956974B-682A-4EF9-A809-A4C4BDE1FD63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tony.FileTransfer.Server", "Tony.FileTransfer.Server\Tony.FileTransfer.Server.csproj", "{7956974B-682A-4EF9-A809-A4C4BDE1FD63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tony.FileTransfer.Core", "Tony.FileTransfer.Core\Tony.FileTransfer.Core.csproj", "{2F98E5E7-BE36-4497-B156-47587A56E525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tony.FileTransfer.Core", "Tony.FileTransfer.Core\Tony.FileTransfer.Core.csproj", "{2F98E5E7-BE36-4497-B156-47587A56E525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tony.FileTransfer.Server.Test", "Tony.FileTransfer.Server.Test\Tony.FileTransfer.Server.Test.csproj", "{2E5FA484-0795-48CE-98B9-764E2A93CAF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tony.FileTransfer.Server.Test", "Tony.FileTransfer.Server.Test\Tony.FileTransfer.Server.Test.csproj", "{2E5FA484-0795-48CE-98B9-764E2A93CAF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

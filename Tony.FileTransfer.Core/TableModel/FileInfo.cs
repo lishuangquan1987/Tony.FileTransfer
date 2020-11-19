@@ -21,5 +21,7 @@ namespace Tony.FileTransfer.Core.TableModel
         public string ServerPath { get; set; }
         [Column("create_time")]
         public DateTime? CreateTime { get; set; }
+        [Column("size")]
+        public long Size { get; set; }
     }
 }
