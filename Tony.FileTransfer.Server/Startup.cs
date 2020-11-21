@@ -60,6 +60,7 @@ namespace Tony.FileTransfer.Server
             {
                 endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapGrpcService<FileUploadService>();
+                endpoints.MapGrpcService<UserService>();
 
                 endpoints.MapGet("/", async context =>
                 {

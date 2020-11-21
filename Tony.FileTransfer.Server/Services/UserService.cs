@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Tony.FileTransfer.Server.Services
     {
         private ILogger<UserService> logger;
         private Func<ServerDBContext> createDBContext;
-        private Random radom = new Random();
+        private Random random = new Random();
 
         public UserService(ILogger<UserService> logger, Func<ServerDBContext> createDBContext)
         {
@@ -41,7 +42,6 @@ namespace Tony.FileTransfer.Server.Services
                 return Task.FromResult(response);
             }
         }
-
         public override Task<CommonResponseWithMessage> GetRecognizedId(CommonRequest request, ServerCallContext context)
         {
             string machineIdentity = request.Message;
@@ -98,9 +98,9 @@ namespace Tony.FileTransfer.Server.Services
         }
         public override Task<CommonResponseWithMessage> Login(CommonRequest request, ServerCallContext context)
         {
-            dynamic userInfo = System.Text.Json.JsonSerializer.Deserialize<dynamic>(request.Message);
-            string userName = userInfo.UserName.ToString();
-            string password = userInfo.Password.ToString();
+            var doc = System.Text.Json.JsonDocument.Parse(request.Message);
+            string userName = doc.RootElement.GetProperty("UserName").GetString();
+            string password = doc.RootElement.GetProperty("Password").GetString();
             using (var dbcontext = createDBContext())
             {
                 var user = dbcontext.UserInfos.FirstOrDefault(x => x.UserName == userName && x.Password == password);
@@ -114,9 +114,91 @@ namespace Tony.FileTransfer.Server.Services
         }
         public override Task<CommonResponse> MergeMachineFileToUserFile(MergeMachineFileToUserFileRequest request, ServerCallContext context)
         {
-            return base.MergeMachineFileToUserFile(request, context);
+            using (var dbcontext = createDBContext())
+            {
+                //check recoginize id
+                var machineInfo = dbcontext.MachineInfos.FirstOrDefault(x => x.RecognizeId == request.RecognizedId);
+                if (machineInfo == null)
+                {
+                    return Task.FromResult(new CommonResponse() { Result=false,ErrorCode = ErrorCodes.RecognizeIdNotExist});
+                }
+                //check user id
+
+                var userInfo = dbcontext.UserInfos.Where(x => x.Id == request.UserId);
+                if (userInfo == null)
+                {
+                    return Task.FromResult(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.UserNotExist });
+                }
+
+                var machineFileInfos = dbcontext.MachineFileInfos.Where(x => x.MachineId == machineInfo.Id).ToList();
+                //check fileid exist
+                machineFileInfos = machineFileInfos.Where(x => dbcontext.FileInfos.Any(y => y.Id == x.FileId)).ToList();
+
+                if (machineFileInfos.Count > 0)
+                {
+                    foreach (var machineFile in machineFileInfos)
+                    {
+                        //if filename is same,file id is same,user id is same,then do not add
+                        var userFileInfo = dbcontext.UserFileInfos.FirstOrDefault(x => x.FileId == machineFile.FileId && x.UserId==request.UserId && Path.GetFileName(x.FileName).Equals(Path.GetFileName(machineFile.FileName)));
+                        if (userFileInfo == null)
+                        {
+                            dbcontext.UserFileInfos.Add(new User_FileInfo()
+                            {
+                                CreateDate = DateTime.Now,
+                                FileId = machineFile.FileId,
+                                FileName = machineFile.FileName,
+                                UserId = request.UserId
+                            });
+                        }
+                    }
+                    dbcontext.SaveChanges();
+                }
+
+                return Task.FromResult(new CommonResponse() { Result = true, ErrorCode = ErrorCodes.NoError });
+            }
         }
 
+
+        
+        public override Task<CommonResponse> Register(CommonRequest request, ServerCallContext context)
+        {
+            var doc= System.Text.Json.JsonDocument.Parse(request.Message);
+            string userName = doc.RootElement.GetProperty("UserName").GetString();
+            string passWord = doc.RootElement.GetProperty("Password").GetString();
+
+            if (string.IsNullOrEmpty(userName))
+            {
+                return Task.FromResult(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.UserNameIsNull });
+            }
+
+            if (string.IsNullOrEmpty(passWord))
+            {
+                return Task.FromResult(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.InValidPassword });
+            }
+
+            using (var dbcontext = createDBContext())
+            {
+                if (dbcontext.UserInfos.Any(x => x.UserName == userName))
+                {
+                    return Task.FromResult(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.UserNameHasExist });
+                }
+
+                dbcontext.UserInfos.Add(new UserInfo()
+                {
+                    UserName = userName,
+                    Password = passWord
+                });
+                var result = dbcontext.SaveChanges();
+                if (result > 0)
+                {
+                    return Task.FromResult(new CommonResponse() { Result = true, ErrorCode = ErrorCodes.NoError });
+                }
+                else
+                {
+                    return Task.FromResult(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.DataBaseError });
+                }
+            }
+        }
         private IEnumerable<ClientFileInfo> GetFilesByMachineId(int machineId)
         {
             using (var dbContext = createDBContext())
@@ -160,11 +242,11 @@ namespace Tony.FileTransfer.Server.Services
             {
                 if (i == 0)
                 {
-                    sb.Append(radom.Next(1, 9));
+                    sb.Append(random.Next(1, 9));
                 }
                 else
                 {
-                    sb.Append(radom.Next(0, 9));
+                    sb.Append(random.Next(0, 9));
                 }
             }
             return int.Parse(sb.ToString());

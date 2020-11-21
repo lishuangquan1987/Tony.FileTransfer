@@ -36,6 +36,10 @@ enum ErrorCodes{
 	InValidUserId=14;
 
 	InValidUserNameOrPassword=15;
+
+	UserNameIsNull=16;
+	UserNameHasExist=17;
+	InValidPassword=18;
 }
 message CommonRequest{
 	string message=1;
