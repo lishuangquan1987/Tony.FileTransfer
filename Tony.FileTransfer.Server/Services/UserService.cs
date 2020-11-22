@@ -92,7 +92,7 @@ namespace Tony.FileTransfer.Server.Services
 
                 var response = new ClientFileInfosResponse();
                 response.Result = new CommonResponse() { Result = true };
-                response.ClientFileInfos.Add(GetFilesByMachineId(userId));
+                response.ClientFileInfos.Add(GetFilesByUserId(userId));
                 return Task.FromResult(response);
             }
         }
@@ -158,8 +158,26 @@ namespace Tony.FileTransfer.Server.Services
             }
         }
 
+        public override Task<CommonResponse> ChangePasswordByRecognizedId(CommonRequest request, ServerCallContext context)
+        {
+            var doc = System.Text.Json.JsonDocument.Parse(request.Message);
+            var recognizeId = doc.RootElement.GetProperty("RecognizeId").GetInt32();
+            var newPassword = doc.RootElement.GetProperty("Password").GetString();
+            using (var dbcontext = createDBContext())
+            {
+                var model = dbcontext.MachineInfos.Where(x => x.RecognizeId == recognizeId).FirstOrDefault();
+                if (model == null)
+                {
+                    return Task.FromResult(new CommonResponse() { Result = false, ErrorCode = ErrorCodes.RecognizeIdNotExist });
+                }
 
-        
+                model.Password = newPassword;
+                var result = dbcontext.SaveChanges();
+
+                return Task.FromResult(new CommonResponse() { Result = result > 0 ? true : false, ErrorCode = result > 0 ? ErrorCodes.NoError : ErrorCodes.DataBaseError });
+            }
+        }
+
         public override Task<CommonResponse> Register(CommonRequest request, ServerCallContext context)
         {
             var doc= System.Text.Json.JsonDocument.Parse(request.Message);

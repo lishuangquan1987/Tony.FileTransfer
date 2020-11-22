@@ -30,7 +30,6 @@ message FinishUploadRequest{
 	string ClientFileName=3;
 	int32 RecognizeId=4;
 	string UserName=5;
-	 
 }
 
 

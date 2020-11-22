@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\callback.proto" />
     <None Remove="Protos\common.proto" />
+    <None Remove="Protos\filedownload.proto" />
     <None Remove="Protos\fileupload.proto" />
     <None Remove="Protos\greet.proto" />
     <None Remove="Protos\user.proto" />
@@ -27,7 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\callback.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\common.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\filedownload.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\fileupload.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
     <Protobuf Include="Protos\user.proto">

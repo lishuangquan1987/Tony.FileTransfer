@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using System.Text.Json;
+using Tony.FileTransfer.Core.Common;
 
 namespace Tony.FileTransfer.Server.Test.gRPC
 {
@@ -77,6 +78,31 @@ namespace Tony.FileTransfer.Server.Test.gRPC
             Assert.True(string.IsNullOrEmpty(result.Message));
             Assert.True(result.Result.ErrorCode== ErrorCodes.InValidUserNameOrPassword);
         }
+        //1b1d485767ed66a4
+        //97b4f4ab7d6e4b1a 455286005 4880
+        [Fact]
+        public void GetRecognizedIdTest()
+        {
+            var identity = Guid.NewGuid().To16String();
+            var result = client.GetRecognizedId(new CommonRequest() { Message = identity });
+            Assert.True(result.Result.Result == true);
+            var doc = JsonDocument.Parse(result.Message);
+            Assert.True(doc.RootElement.GetProperty("RecognizeId").GetInt64().ToString().Length==9);
+                 
+        }
+
+        [Fact]
+        public void GetSameRecognizeIdTest()
+        {
+            var identity = "97b4f4ab7d6e4b1a";
+            var result = client.GetRecognizedId(new CommonRequest() { Message = identity });
+            Assert.True(result.Result.Result == true);
+            var doc = JsonDocument.Parse(result.Message);
+            Assert.True(doc.RootElement.GetProperty("RecognizeId").GetInt64().ToString()== "455286005");
+            Assert.True(doc.RootElement.GetProperty("Password").GetString() == "4880");
+        }
+        
+       
 
     }
 }

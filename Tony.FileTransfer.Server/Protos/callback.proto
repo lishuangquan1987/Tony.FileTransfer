@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tony.FileTransfer.Server";
+
+import "Protos/common.proto";
+
+package callback;
+
+service ICallBack{
+
+	rpc Register(common.CommonRequest) returns (stream CallbackResponse);
+}
+
+message CallbackResponse{
+	string Message=1;
+	CmdTypes CmdType=2;
+}
+
+enum CmdTypes{
+	HeartBeat=0;
+	RegisterFail=1;
+	RegisterSuccess=3;
+	CloseClient=4;
+}
+

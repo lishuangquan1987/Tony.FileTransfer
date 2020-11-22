@@ -55,6 +55,11 @@ namespace Tony.FileTransfer.Server.Test.gRPC
                 var call = client.UploadWithStream(cancellationToken: tokenSource.Token, headers: header);
                 var result = await call.ResponseStream.MoveNext(tokenSource.Token);
 
+                if (!call.ResponseStream.Current.Result)
+                {
+                    return;
+                }
+
                 int size = 102400;
                 long totalLenth = new FileInfo(fileName).Length;
                 long hasUploadedLenth = 0;

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tony.FileTransfer.Server";
+
+import "Protos/common.proto";
+
+package filedownload;
+
+service IFileDownload{
+	rpc DownloadFileByUserId(DownloadFileByUserIdRequest) returns (stream DownloadFileResponse);
+	rpc DownloadFileByRecognizeId(DownloadFileByRecognizeIdRequest) returns (stream DownloadFileResponse);
+}
+
+message DownloadFileByUserIdRequest{
+	int32 FileId=1;
+	string UserId=3;
+}
+
+message DownloadFileByRecognizeIdRequest{
+	int32 FileId=1;
+	int32 RecognizeId=2;
+}
+message DownloadFileResponse{
+	bytes Data=1;
+}
+
+

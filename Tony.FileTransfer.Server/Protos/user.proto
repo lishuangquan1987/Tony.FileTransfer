@@ -19,6 +19,8 @@ service IUserService{
 	rpc MergeMachineFileToUserFile(MergeMachineFileToUserFileRequest) returns (common.CommonResponse);
 	// Register user
 	rpc Register(common.CommonRequest) returns (common.CommonResponse);
+
+	rpc ChangePasswordByRecognizedId(common.CommonRequest) returns(common.CommonResponse);
 	
 }
 message ClientFileInfo{
