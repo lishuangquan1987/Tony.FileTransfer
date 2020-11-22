@@ -25,3 +25,6 @@ Tony.FileTransfer.Core/bin/Debug/netcoreapp3.1/Tony.FileTransfer.Core.pdb
 Tony.FileTransfer.Core/obj/Debug/netcoreapp3.1/Tony.FileTransfer.Core.pdb
 Tony.FileTransfer.Server.Test/bin/Debug/netcoreapp3.1/Tony.FileTransfer.Core.pdb
 Tony.FileTransfer.Core/obj/Debug/netcoreapp3.1/Tony.FileTransfer.Core.csprojAssemblyReference.cache
+Tony.FileTransfer.Server.Test/obj/
+Tony.FileTransfer.Server/obj/
+Tony.FileTransfer.Core/obj/
