@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Tony.FileTransfer.Resource">
+    
+    <SolidColorBrush x:Key="Basic.Background" Color="#121212"></SolidColorBrush>
+    <SolidColorBrush x:Key="Basic.Foreground" Color="#ffffff"></SolidColorBrush>
+    <SolidColorBrush x:Key="Basic.BorderBrush" Color="#ff8d6b"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="Button.Foreground" Color="#ff8d6b"></SolidColorBrush>
+    <SolidColorBrush x:Key="Button.MouseOverBackground" Color="#ff8d6b"></SolidColorBrush>
+    
+</ResourceDictionary>

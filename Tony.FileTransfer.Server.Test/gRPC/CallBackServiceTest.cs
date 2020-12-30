@@ -28,11 +28,13 @@ namespace Tony.FileTransfer.Server.Test.gRPC
                 tokenSource.Cancel();
                 return;
             }
-            while (await call.ResponseStream.MoveNext(tokenSource.Token))
+            while (!tokenSource.IsCancellationRequested && await call.ResponseStream.MoveNext(tokenSource.Token))
             {
                 var model = call.ResponseStream.Current;
                 Assert.True(model.CmdType== CmdTypes.HeartBeat);
+                tokenSource.Cancel();
             }
+            
         }
     }
 }

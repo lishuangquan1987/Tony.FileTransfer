@@ -8,23 +8,27 @@ using Tony.FileTransfer.Server.State;
 
 namespace Tony.FileTransfer.Server.Services
 {
-    public class CallbackService:ICallBack.ICallBackBase
+    public class CallbackService : ICallBack.ICallBackBase
     {
-        public override Task Register(CommonRequest request, IServerStreamWriter<CallbackResponse> responseStream, ServerCallContext context)
+        public override async Task Register(CommonRequest request, IServerStreamWriter<CallbackResponse> responseStream, ServerCallContext context)
         {
-            string recognizeIdStr= request.Message;
+            string recognizeIdStr = request.Message;
             if (string.IsNullOrEmpty(recognizeIdStr) || !int.TryParse(recognizeIdStr, out int recognizeId))
             {
-               return responseStream.WriteAsync(new CallbackResponse() { CmdType = CmdTypes.RegisterFail, Message = "Invalid RecognizeId" });
+                await responseStream.WriteAsync(new CallbackResponse() { CmdType = CmdTypes.RegisterFail, Message = "Invalid RecognizeId" });
+                return;
             }
-            ClientManager.Instance.AddClient(recognizeId, responseStream);
-            responseStream.WriteAsync(new CallbackResponse() { CmdType = CmdTypes.RegisterSuccess });
+            ClientManager.Instance.AddClient(recognizeId);
+            await responseStream.WriteAsync(new CallbackResponse() { CmdType = CmdTypes.RegisterSuccess });
             while (!context.CancellationToken.IsCancellationRequested)
             {
-                //调用只能在当前上下文调用！！！
-                Thread.Sleep(1000);
+                if (ClientManager.Instance.GetMessage(recognizeId, out var message))
+                {
+                    await responseStream.WriteAsync(message);
+                }
+                await Task.Delay(10);
             }
-            return Task.Delay(10);
+            ClientManager.Instance.RemoveClient(recognizeId);
         }
     }
 }

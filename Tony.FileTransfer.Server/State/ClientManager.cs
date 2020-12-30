@@ -9,7 +9,7 @@ namespace Tony.FileTransfer.Server.State
 {
     public class ClientManager
     {
-        private ConcurrentDictionary<int, Grpc.Core.IServerStreamWriter<CallbackResponse>> dicClient = new ConcurrentDictionary<int, Grpc.Core.IServerStreamWriter<CallbackResponse>>();
+        private Dictionary<int, ConcurrentQueue<CallbackResponse>> dicMessage = new Dictionary<int, ConcurrentQueue<CallbackResponse>>();
         public static ClientManager Instance;
         static ClientManager()
         {
@@ -18,38 +18,56 @@ namespace Tony.FileTransfer.Server.State
 
         public ClientManager()
         {
-            Task.Factory.StartNew(async () =>
+            Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
-                    Thread.Sleep(1000);
-                    SendCmdToClient(CmdTypes.HeartBeat);
+                    Thread.Sleep(3000);
+                    SendCmdToAllClient(CmdTypes.HeartBeat);
                 }
             });
         }
 
-        public void AddClient(int recognizeId, Grpc.Core.IServerStreamWriter<CallbackResponse> client)
+        public void AddClient(int recognizeId)
         {
-            if (dicClient.ContainsKey(recognizeId))
+           
+            if (!dicMessage.ContainsKey(recognizeId))
             {
-                dicClient.TryRemove(recognizeId, out Grpc.Core.IServerStreamWriter<CallbackResponse> c);
-            }
-            dicClient.TryAdd(recognizeId,client);
-        }
-        public void RemoveClient(int recognizeId)
-        {
-            if (dicClient.ContainsKey(recognizeId))
-            {
-                dicClient.TryRemove(recognizeId, out Grpc.Core.IServerStreamWriter<CallbackResponse> c);
-            }
-        }
-        public  void SendCmdToClient(CmdTypes cmdType, string msg = null)
-        {
-            foreach (var key in dicClient.Keys)
-            {
-                dicClient[key].WriteAsync(new CallbackResponse() {  CmdType=cmdType,Message=msg});
+                dicMessage.Add(recognizeId, new ConcurrentQueue<CallbackResponse>());
             }
         }
 
+        public void RemoveClient(int recognizeId)
+        {
+            if (dicMessage.ContainsKey(recognizeId))
+            {
+                dicMessage.Remove(recognizeId);
+            }
+        }
+        private void SendCmdToAllClient(CmdTypes cmdType, string msg = "")
+        {
+            foreach (var key in dicMessage.Keys)
+            {
+                SendCmdToClient(key, cmdType, msg);
+            }
+        }
+
+        public void SendCmdToClient(int recognizeId, CmdTypes cmdType, [System.Diagnostics.CodeAnalysis.NotNull] string msg)
+        {
+            if (dicMessage.ContainsKey(recognizeId))
+            {
+                dicMessage[recognizeId].Enqueue(new CallbackResponse() { CmdType = cmdType, Message = msg });
+            }
+
+        }
+
+        public bool GetMessage(int recognize,out CallbackResponse message)
+        {
+            message = null;
+            if (!dicMessage.ContainsKey(recognize)) return false;
+
+            return dicMessage[recognize].TryDequeue(out message);
+        }
     }
+    
 }
