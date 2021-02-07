@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Tony.FileTransfer.Resource.Controls
@@ -12,11 +13,22 @@ namespace Tony.FileTransfer.Resource.Controls
         Grid titleGrid;
         public CustomWindow()
         {
+            string resourcePath = "pack://application:,,,/Tony.FileTransfer.Resource;component/Dark-Orange-Style.xaml";
+            if (!Application.Current.Resources.MergedDictionaries.Any(x => x.Source.ToString() == resourcePath))
+            {
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() {Source=new Uri(resourcePath, UriKind.RelativeOrAbsolute)});
+            }
             this.Loaded += CustomWindow_Loaded;
         }
 
         private void CustomWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            var style = this.FindResource("customWindowStyle") as Style;
+            if (style != null)
+            {
+                this.Style = style;
+            }
+
             this.OnApplyTemplate();
 
             if (this.WindowStyle == System.Windows.WindowStyle.None&&titleGrid!=null)
@@ -28,7 +40,7 @@ namespace Tony.FileTransfer.Resource.Controls
         {
             base.OnApplyTemplate();
 
-            titleGrid = GetTemplateChild("PART_TitleBar") as Grid;
+            titleGrid = this.Template.FindName("PART_TitleBar",this) as Grid;
             
         }
     }

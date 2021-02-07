@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Tony.FileTransfer.Resource">
+                    xmlns:local="clr-namespace:Tony.FileTransfer.Resource.Controls">
     
     <SolidColorBrush x:Key="Basic.Background" Color="#121212"></SolidColorBrush>
     <SolidColorBrush x:Key="Basic.Foreground" Color="#ffffff"></SolidColorBrush>

@@ -72,19 +72,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\Basic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Window.xaml">
+    <Page Include="Controls\CustomWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Dark-Orange-Style.xaml">
+    <Page Include="Colors\Dark-Orange-Color.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Page Include="Colors\Dark-Orange-Color.xaml">
+    </Page>
+    <Page Include="Dark-Orange-Style.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,125 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Tony.FileTransfer.Resource.Controls">
+    <Style TargetType="local:CustomWindow" x:Key="customWindowStyle">
+        <Setter Property="Background" Value="{DynamicResource Basic.Background}"></Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CornerRadius="0"
+                      GlassFrameThickness="1"
+                      UseAeroCaptionButtons="True"
+                      NonClientFrameEdges="None" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:CustomWindow">
+                    <Border CornerRadius="2" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="PART_TitleBar1" Height="30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" MaxWidth="30"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto" MaxWidth="200"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{TemplateBinding Icon}" Width="30"></Image>
+                                <TextBlock Text="{TemplateBinding Title}" VerticalAlignment="Center" Grid.Column="1" Foreground="{DynamicResource Basic.Foreground}"></TextBlock>
+                                <Grid Grid.Column="3">
+                                    <Grid.Resources>
+                                        <Style x:Key="miniMaxButtonStyle" TargetType="Button">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            <Setter Property="Padding" Value="0"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                                                Background="{TemplateBinding Background}" 
+                                                                x:Name="bd">
+                                                            <ContentPresenter  HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                                                        </Border>
+
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="Gray"></Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                        <Style x:Key="closeButtonStyle" TargetType="Button">
+                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                            <Setter Property="BorderThickness" Value="0"></Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                            <Setter Property="Padding" Value="0"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="Transparent" x:Name="grid">
+                                                            <ContentPresenter UseLayoutRounding="True" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="Red" TargetName="grid"></Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="PART_MinimalButton" Height="30" SnapsToDevicePixels="True" Width="30" Style="{x:Null}">
+                                        
+                                        <Line X1="7" X2="22.5" Y1="15" Y2="15"  StrokeThickness="1" Stroke="{DynamicResource Basic.Foreground}"></Line>
+                                    </Button>
+                                    <Button x:Name="PART_MaxMalButton" Grid.Column="1" UseLayoutRounding="True" Focusable="False"  Style="{x:Null}">
+
+                                    </Button>
+                                    <Button x:Name="PART_CloseButton1" RenderSize="12,15.24" Grid.Column="2" Style="{x:Null}">
+                                        <!--<Grid Height="15" Width="15">
+                                            <Line X1="0"  Y1="0" X2="15" Y2="15" Stroke="{DynamicResource Basic.Foreground}" StrokeThickness="1"></Line>
+                                            <Line X1="15" Y1="0" Y2="15" X2="0" Stroke="{DynamicResource Basic.Foreground}" StrokeThickness="1"></Line>
+                                        </Grid>-->
+                                    </Button>
+                                </Grid>
+                                <StackPanel Grid.Column="4" Orientation="Horizontal">
+                                    
+                                    <Button x:Name="PART_MinimalButton1" Height="30" SnapsToDevicePixels="True" Width="30" Style="{x:Null}">
+
+                                        <Line X1="7" X2="22.5" Y1="15" Y2="15"  StrokeThickness="1" Stroke="{DynamicResource Basic.Foreground}"></Line>
+                                    </Button>
+                                    <Button x:Name="PART_MaxMalButton2" Content="111" Height="20" Width="20" Grid.Column="1" UseLayoutRounding="True" Focusable="False"  Style="{x:Null}">
+
+                                    </Button>
+                                    <Button x:Name="PART_CloseButton13" Content="222" Height="20" Width="20" RenderSize="12,15.24" Grid.Column="2" Style="{x:Null}">
+                                        <!--<Grid Height="15" Width="15">
+                                            <Line X1="0"  Y1="0" X2="15" Y2="15" Stroke="{DynamicResource Basic.Foreground}" StrokeThickness="1"></Line>
+                                            <Line X1="15" Y1="0" Y2="15" X2="0" Stroke="{DynamicResource Basic.Foreground}" StrokeThickness="1"></Line>
+                                        </Grid>-->
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                            <AdornerDecorator Grid.Row="1">
+                                <ContentPresenter></ContentPresenter>
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

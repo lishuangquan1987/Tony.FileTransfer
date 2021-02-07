@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Tony.FileTransfer.Resource;component/Dark-Orange-Style.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tony.FileTransfer.Resource;component/Dark-Orange-Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

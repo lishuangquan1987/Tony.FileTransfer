@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-3-2105022617
+51945210072
 
 4-572385612
 13-1505183044
-Controls\Button.xaml;Controls\Window.xaml;Colors\Dark-Orange-Color.xaml;
+Controls\Basic.xaml;Controls\Button.xaml;Controls\CustomWindow.xaml;Colors\Dark-Orange-Color.xaml;Dark-Orange-Style.xaml;
 
-True
+False
 
